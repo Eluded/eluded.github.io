@@ -1,0 +1,178 @@
+body {
+  background-color: black;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-family: monospace;
+}
+
+div#simple_preloader_container > div > div{
+  color: transparent !important;
+}
+
+a{
+  color: white;
+}
+
+li {
+  display: inline;
+}
+
+ul {
+  padding: 0;
+  margin-bottom: 0;
+}
+
+div#main_canvas_container {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.ui {
+  position: absolute;
+  z-index: 9000;
+  width: 90%;
+  padding: 0 5%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ui-contents {
+  width: 50%;
+  margin-left: 25%;
+}
+
+.ui-contents>img {
+  width: 50%;
+  margin-left: 25%;
+  display: block;
+}
+
+.buttons {
+  color: white;
+  margin-left: 25%;
+  margin-top: 20px;
+  width: 50%;
+  display: block;
+  padding: 10px 0;
+  text-align: center;
+  font-size: large;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid white;
+}
+
+.buttons:hover {
+  color: black;
+  background: white;
+}
+
+.message {
+  color: white;
+  margin-top: 20px;
+  width: 100%;
+  display: block;
+  padding: 10px 10px;
+  text-align: center;
+  font-size: small;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid white;
+}
+
+.footer {
+  position: absolute;
+  z-index: 9000;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  text-align: center;
+  font-size: x-small;
+}
+
+.license {
+  display: inline-block;
+}
+
+.credits {
+  font-size: small;
+  text-transform: uppercase;
+}
+
+.regular-controls {
+  color: white;
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  padding: 10px;
+  border: 2px solid white;
+  text-align: center;
+  text-transform: uppercase;
+  background: black;
+}
+
+.anim {
+  -webkit-transition: all 500ms ease-in-out;
+  -moz-transition: all 500ms ease-in-out;
+  -o-transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
+}
+
+@media (max-width: 900px) {
+  .ui-contents {
+    width: 80%;
+    margin-left: 10%;
+  }
+  .ui-contents>img {
+    display: none;
+  }
+  .footer {
+    left: 10%;
+    width: 80%;
+    transform: none;
+  }
+  .buttons {
+    margin-left: 0;
+    width: 100%;
+    display: block;
+  }
+}
+
+@media (max-height: 600px) {
+  .ui {
+    position: absolute;
+    z-index: 9000;
+    width: 90%;
+    padding: 0 5%;
+    top: 40%;
+    transform: translateY(-50%);
+  }
+}
+
+@media (max-height: 400px) {
+  .ui {
+    position: absolute;
+    z-index: 9000;
+    width: 90%;
+    padding: 0 5%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .footer {
+    display: none;
+  }
+}

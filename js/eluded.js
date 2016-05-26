@@ -1,7 +1,41 @@
+/**
+* Eluded
+* v0.4 - May 15, 2016
+* (C) Hirad Sab; GNU/GPL License
+* http://hiradsab.com
+*
+* Eluded is an exploration of audio reactivity in the context of efficiency
+* and optimization. The experience utilizes different technologies namely
+* WebGL and WebVR and multiple libraries to facilitate itself.
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, version 3 or later.
+* http://www.gnu.org/licenses/
+*/
+
+/**
+* Below is a list of libraries and frameworks utilized in Eluded.
+*
+* Blend4Web 16.03 Copyright (C) 2016 Triumph LLC; GNU/GPL License
+* --- https://www.blend4web.com
+* jQuery 2.2.3 Copyright (C) 2016 The jQuery Foundation; MIT License
+* --- https://jquery.org
+* screenfull.js 3.0.0 Copyright (C) 2015 Sindre Sorhus; MIT License
+* --- https://github.com/sindresorhus/screenfull.js
+* url() 1.8.6 Copyright (C) 2012 Websanova; MIT License
+* --- https://github.com/websanova/js-url
+*/
 
 
+/**
+* Main function responsible for initializing Blend4Web modules,
+* loading assets, populating the world and animation.
+* @param  {Boolean} is_vr [Passed from DOM. 0 = Oculus, 1 = Carboard V1, 2 = Cardboard V2]
+*/
 function load_regular(is_vr){
   hide_ui();
+  // On mobile devices fullscreen only on Android
   if (is_mobile && navigator.userAgent.match(/Android/i)) {
     screenfull.request();
   }
@@ -9,6 +43,7 @@ function load_regular(is_vr){
     screenfull.request();
   }
 
+  // Show camera and quality prompt if non-mobile and non-vr
   if (!is_mobile && is_vr == null){
     $(".regular-controls").show();
   }
@@ -16,36 +51,38 @@ function load_regular(is_vr){
   "use strict"
   b4w.register("eluded_vr", function(exports, require) {
 
-    var m_app	= require("app");
+    var m_app	  = require("app");
     var m_data	= require("data");
-    var m_cfg	= require("config");
+    var m_cfg	  = require("config");
     var m_scene	= require("scenes");
 
-    var m_obj = require("objects");
+    var m_obj   = require("objects");
     var m_trans	= require("transform");
     var m_geom	= require("geometry");
     var m_anim  = require("animation");
 
-    var m_ctl	= require("controls");
-    var m_cam = require("camera");
+    var m_ctl	  = require("controls");
+    var m_cam   = require("camera");
     var m_mouse = require("mouse");
-    var m_inp = require("input");
+    var m_inp   = require("input");
 
-    var m_hmd    = require("hmd");
+    var m_hmd   = require("hmd");
 
-    var m_vec3 = require("vec3");
-    var m_util = require("util");
-    var m_quat = require("quat");
+    var m_vec3  = require("vec3");
+    var m_util  = require("util");
+    var m_quat  = require("quat");
 
-    var m_cont = require("container");
+    var m_cont  = require("container");
 
     var m_preloader = require("preloader");
     var PRELOADING = true;
 
+    // Properties holds all baked audio data and frequencies
     var properties;
     var sphere;
     var tunnel;
     var shrub;
+
 
     var spheres_parent;
     var sphere_empties;
@@ -70,6 +107,10 @@ function load_regular(is_vr){
     var _quat_tmp2 = m_quat.create();
     var _vec3_tmp = m_vec3.create();
 
+    /**
+    * Sets quality based on hidden URL parameter.
+    * Defaults to High if no quality provided.
+    */
     function set_quality(){
       switch (quality) {
         case "":
@@ -87,6 +128,9 @@ function load_regular(is_vr){
       }
     }
 
+    /**
+    * Initializes the scene and HMD module if VR is selected
+    */
     exports.init = function() {
       if (is_vr != null) {
         m_cfg.set("stereo", "HMD");
@@ -94,14 +138,19 @@ function load_regular(is_vr){
       m_app.init({
         canvas_container_id: "main_canvas_container",
         callback: init_cb,
-        show_fps: true,
-        console_verbose: true,
+        show_fps: false,
+        console_verbose: false,
         autoresize: true,
         quality: set_quality(),
         gyro_use: is_mobile
       });
     }
 
+    /**
+    * Callback function invoked by above initializer function
+    * @param  {String} canvas_elem   [Canvas container ID]
+    * @param  {Boolean} success      [Indicates if WebGL initialization was successful]
+    */
     function init_cb(canvas_elem, success) {
       if (!success) {
         return;
@@ -115,15 +164,26 @@ function load_regular(is_vr){
       load();
     }
 
+    /**
+    * Responsible for loading JSON file and invoking callback functions
+    */
     function load() {
       var p_cb = PRELOADING ? preloader_callback : null;
       m_data.load("eluded_vr.json", load_cb, p_cb, !true);
     }
 
+    /**
+    * Preloader callback
+    * @param  {Number} percentage [The new preloader bar percentage]
+    */
     function preloader_callback(percentage) {
       m_preloader.update_preloader(percentage);
     }
 
+    /**
+    * Data loaded callback. Executed when the data loading process has been completed.
+    * @param  {Number} data_id [Data ID]
+    */
     function load_cb(data_id) {
       m_app.enable_camera_controls();
       camera = m_scene.get_active_camera();
@@ -132,6 +192,7 @@ function load_regular(is_vr){
         m_cam.set_hmd_fov(camera, [fov, fov, fov, fov], [fov, fov, fov, fov])
       }
 
+      // Set Oculus parameters
       if (is_vr == 0) {
         m_scene.set_hmd_params({
           enable_hmd_stereo: true,
@@ -143,6 +204,7 @@ function load_regular(is_vr){
           chromatic_aberration_coefs : [-0.015, 0.02, 0.025, 0.02]
         });
       }
+      // Set Cardboard V1 parameters
       if (is_vr == 1) {
         m_scene.set_hmd_params({
           enable_hmd_stereo: true,
@@ -154,6 +216,7 @@ function load_regular(is_vr){
           chromatic_aberration_coefs : [0.0, 0.0, 0.0, 0.0]
         });
       }
+      // Set Cardboard V2 parameters
       if (is_vr == 2) {
         m_scene.set_hmd_params({
           enable_hmd_stereo: true,
@@ -166,10 +229,12 @@ function load_regular(is_vr){
         });
       }
 
+      // Create rotation sensors and reset camera rotation if device is mobile and supports gyroscope
       if (is_mobile && m_inp.can_use_device(m_inp.DEVICE_GYRO)){
         create_rotation_sensors();
         m_trans.set_rotation_euler(camera, 0,0,0);
       }
+      // Setup camera/mouse relationship if regular experience requested
       if (!is_mobile && is_vr == null) {
         var canvas_elem = m_cont.get_canvas();
 
@@ -181,11 +246,12 @@ function load_regular(is_vr){
         m_mouse.set_plock_smooth_factor(camera_smooth_fact);
       }
 
+      // Initialize root objects
       properties = m_scene.get_object_by_name("properties");
-      sphere = m_scene.get_object_by_name("Sphere");
       tunnel = m_scene.get_object_by_name("Curve_Tunnel");
       shrub = m_scene.get_object_by_name("Shrub");
 
+      sphere = m_scene.get_object_by_name("Sphere");
       sphere.random1 = Math.random();
       sphere.random2 = Math.random();
       sphere.random3 = Math.random();
@@ -196,8 +262,9 @@ function load_regular(is_vr){
       shrub_parent = m_scene.get_object_by_name("plantsParent");
       shrub_empties = m_scene.get_object_children(shrub_parent);
 
-      setup_anim();
+      setup_scene();
 
+      // Setup eventListeners to allow for quality change
       window.addEventListener("keydown", function(e){
         if(e.keyCode === 49  || e.keyCode === 97 && document.activeElement !== 'text') {
           _url = "/?quality=low&start=true";
@@ -214,17 +281,41 @@ function load_regular(is_vr){
       });
     }
 
+    /**
+    * Camera rotation callback for mouse events. Performs delta rotation.
+    * @param  {Number} rot_x [Azimuth angle in radians]
+    * @param  {Number} rot_y [Elevation angle in radians]
+    */
     function rot_cb(rot_x, rot_y) {
       m_cam.eye_rotate(camera, rot_x*camera_rot_fact, rot_y*camera_rot_fact);
     }
 
+    /**
+    * Gets the current frame of the object's animation, based on FPS defined in blender.
+    * @return {Number} [Current frame]
+    */
     function get_frame(){
       frame = parseInt(m_anim.get_frame(properties, 0), 10);
+      return frame;
     }
+
+    /**
+    * Returns the frame accurate amplitude of specified audio channel
+    * @param  {Number} prop [Number of curve channel in properties objects]
+    * @return {Number}      [Amplitude of specified audio channel number at current frame]
+    */
     function prop(prop){
       return get_prop_points(properties, prop, frame);
     }
 
+    /**
+    * Helper method to access baked data channel of a specified object at specified frame.
+    * Objects data channels must be named prop, prop1, prop2, etc.
+    * @param  {Object3D} obj   [Object containing the baked data]
+    * @param  {Number} prop  [Channel number of data. E.g. For prop1 is 1]
+    * @param  {Number} frame [Frame of interest]
+    * @return {Number}       [Value of baked data channel at specified frame]
+    */
     function get_prop_points(obj, prop ,frame){
       if (prop == 0)
       return obj.actions[0].fcurves['["prop"]'][0]._pierced_points[frame];
@@ -232,23 +323,38 @@ function load_regular(is_vr){
       return obj.actions[0].fcurves['["prop' + prop + '"]'][0]._pierced_points[frame];
     }
 
+    /**
+    * Computes integer value of a number multiplied by 8.
+    * Intended to convert a random number between 0 and 1 to a corresponding channel number
+    * of properties object
+    * @param  {Number} num [Value to be converted]
+    * @return {Number}     [Integer value of number * 8]
+    */
     function prop_channel(num){
       return parseInt(num * 8, 10);
     }
 
+    /**
+    * Computes a random whole number between 0 and 8
+    * @return {Number}     [Computed value, including 0, excluding 8]
+    */
     function random(){
       var random = parseInt(Math.random()*8, 10);
       return random;
     }
 
+    /**
+    * Maps a value from 0 to 1 to degrees
+    * @param  {Number} num [Provided number]
+    * @return {Number}     [Value in degrees]
+    */
     function degree(num){
       return num * 360;
     }
 
-    function radian(num){
-      return num * Math.PI;
-    }
-
+    /**
+    * Clones the "Shrub" object to designates empty objects
+    */
     function setup_plants(){
       for (var i = 0; i < shrub_empties.length; i++) {
         var empty = shrub_empties[i];
@@ -266,7 +372,12 @@ function load_regular(is_vr){
       }
     }
 
-    function setup_objectList(){
+    /**
+    * Clones the "Sphere" object to designated empty objects. Responsible for
+    * generating random seeds used for rotation and rotation animation,
+    * ensuring minimum scale culling attribute.
+    */
+    function setup_spheres(){
       for (var i = 0; i < sphere_empties.length; i++) {
         var empty = sphere_empties[i];
         var emptyLocation = m_trans.get_translation(empty);
@@ -279,15 +390,19 @@ function load_regular(is_vr){
         m_trans.set_rotation_euler(currentObject, Math.random()*180,Math.random()*180,Math.random()*180);
         var candid_scale = currentObject.random1*currentObject.random2;
         if (candid_scale < sphere_scale_min){
-          // candid_scale = Math.random() * (1 - scale_limit) + scale_limit;
           candid_scale = sphere_scale_min;
         }
         m_trans.set_scale(currentObject, candid_scale);
-
         sphere_objects.push(currentObject);
       }
     }
 
+    /**
+    * Helper method to find distance of object to camera.
+    * Used for Camera-Range-Based-Culling mechanism.
+    * @param  {Object3D}  obj [Object of interest]
+    * @return {Boolean}     [Based relationship to visible_radius variable]
+    */
     function is_in_camera_range(obj) {
       var objectLocation = m_trans.get_translation(obj)
       var cameraLocation = m_trans.get_translation(camera)
@@ -300,6 +415,11 @@ function load_regular(is_vr){
       }
     }
 
+    /**
+    * Dynamically appends Sphere objects to scene based on their distance from
+    * camera, by utilizing is_in_camera_range function and iterating over sphere
+    * objects.
+    */
     function append_to_scene(){
       for (var i = 0; i < sphere_objects.length; i++){
         var currObj = sphere_objects[i];
@@ -314,14 +434,28 @@ function load_regular(is_vr){
       }
     }
 
-    function setup_anim() {
-      setup_objectList();
+    /**
+    * Sets up the scene by generating sphere and plant objects, creating an infinite
+    * elapsed time sensor, setting up sensor, defining sensor's callback, and defining
+    * animation behaviors and keyframes in the callback
+    */
+    function setup_scene() {
+      setup_spheres();
       setup_plants();
 
       var elapsed = m_ctl.create_timeline_sensor();
       var sens_array = [elapsed];
       var logic = function(s) {return (s[0])};
 
+      /**
+      * Updates the current frame, and performs Camera-Range-Based-Culling.
+      * If there is a change in frame will run through a series of conditionals
+      * defining animation behaviors based on dynamic (baked-audio driven) or
+      * hard-coded values.
+      * @param  {Object3D} obj   [Object 3D, or null to denote the global object]
+      * @param  {String} id    [Sensor's ID]
+      * @param  {Number} pulse [Additional callback condition, +1 or -1]
+      */
       function anim_cb(obj, id, pulse) {
         get_frame();
         append_to_scene();
@@ -398,6 +532,10 @@ function load_regular(is_vr){
       m_ctl.create_sensor_manifold(properties, "ANIM", m_ctl.CT_CONTINUOUS,sens_array, logic, anim_cb);
     }
 
+    /**
+    * Responsible for adjusting camera rotation on mobile devices based on gyroscope input
+    * @return {[type]} [description]
+    */
     function create_rotation_sensors() {
       var obj = m_scene.get_active_camera();
       var g_sensor = m_ctl.create_gyro_angles_sensor();
@@ -457,7 +595,7 @@ function load_regular(is_vr){
             m_ctl.create_sensor_manifold(obj, "ROTATE_GYRO",
             m_ctl.CT_CONTINUOUS, [g_sensor], null, rotate_cb);
           }
-        });
-
-        b4w.require("eluded_vr").init();
-      }
+        }
+      );
+      b4w.require("eluded_vr").init();
+    }

@@ -2,18 +2,25 @@
 <html>
 
 <head>
-  <title>Eluded VR</title>
+  <title>ELUDED</title>
   <meta charset="utf-8">
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes">
+
+  <meta property="og:type"                  content="place" />
+  <meta property="og:url"                   content="https://eluded.github.io" />
+  <meta property="og:title"                 content="ELUDED" />
+  <meta property="og:image"                 content="/favicons/favicon-orig.png" />
+  <meta property="place:location:latitude"  content="ELUDED: -4.915833" />
+  <meta property="place:location:longitude" content="ELUDED: -166.552734" />
 
   <link rel="stylesheet" href="eluded_vr.css" type="text/css" />
   <script   src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
   <script type="text/javascript" src="js/controls.js"></script>
   <script type="text/javascript"  src="js/url.min.js"></script>
   <script type="text/javascript"  src="js/screenfull.min.js"></script>
-  <script type="text/javascript" src="js/desktop.js"></script>
+  <script type="text/javascript" src="js/eluded.js"></script>
   <script type="text/javascript" src="b4w.min.js"></script>
   <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-touch-icon-60x60.png">
@@ -61,9 +68,9 @@
         <div id="webgl-error" ></div>
       </div>
 
-      <div id="vr-message" class="message">
+      <div id="vr-message" class="message anim">
         VR experience on non-mobile devices requires WebVR enabled browsers.<br>
-        Refer to <a href="https://github.com/hsab/eluded" target="_blank">this guide</a> for installation or try an alternative version on your phone using Cardboard.
+        Refer to <a href="https://github.com/Eluded/eluded.github.io" target="_blank">this guide</a> for installation or try an alternative version on your phone using Cardboard.
       </div>
 
     </div>
@@ -72,7 +79,7 @@
 
   <div class="footer anim">
     <div id="credits-left" class="credits">
-      Directed & Developed by <a href="http://hiradsab.com/">Hirad Sab</a>
+      Concept & Development by <a href="http://hiradsab.com/">Hirad Sab</a>
     </div>
     <div id="credits-right" class="credits">
       Music by <a href="http://www.ashkoosha.com/">Ash Koosha</a>
@@ -82,7 +89,7 @@
         Eluded is an open source experience released under <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU/GPL License</a>.
         It utilizes <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank">Blend4Web</a> for WebGL purposes, <a href="https://jquery.com/" target="_blank">jQuery</a> for UI needs, and <a href="https://www.blender.org/" target="_blank">Blender</a> for asset creation.
         Feel free to modify, share, and explore.<br>
-        <a href="https://github.com/hsab/eluded" target="_blank">Source Code</a>
+        <a href="https://github.com/Eluded/eluded.github.io" target="_blank">Source Code</a>
       </p>
     </div>
   </div>

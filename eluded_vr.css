@@ -79,7 +79,7 @@ div#main_canvas_container {
 .message {
   color: white;
   margin-top: 20px;
-  width: 100%;
+  width: 50%;
   display: block;
   padding: 10px 10px;
   text-align: center;
@@ -88,6 +88,7 @@ div#main_canvas_container {
   text-transform: uppercase;
   text-decoration: none;
   border: 2px solid white;
+  margin-left: 25%;
 }
 
 .footer {
@@ -150,6 +151,10 @@ div#main_canvas_container {
     width: 100%;
     display: block;
   }
+  .message {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 
 @media (max-height: 600px) {
@@ -161,6 +166,7 @@ div#main_canvas_container {
     top: 40%;
     transform: translateY(-50%);
   }
+
 }
 
 @media (max-height: 400px) {

@@ -151,7 +151,3 @@ function hide_ui(){
   $(".bg").hide();
   $(".footer").hide();
 }
-
-console.log = function(){};
-console.error = function(){};
-console.warn = function(){};

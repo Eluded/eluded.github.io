@@ -69,22 +69,22 @@ Scene Setup
 -----------
 
 The following text is a description of the setup inside Blender. This
-documentation intends to not focus on technical aspects of
-implementation as it can be subjected to constant change. However both
+documentation does not focus on technical aspects since implementation is always
+subject to change. However both
 [eluded.js](https://github.com/Eluded/eluded.github.io/blob/master/js/eluded.js)
 and
 [controls.js](https://github.com/Eluded/eluded.github.io/blob/master/js/controls.js)
 have inline and function header comments to explain the functionality
-and approach. Furthermore Blend4Web manual and api documentations were
-an essential part of the development process and also contain wealth of
-information on library usage in Blender and implementation on the
+and approach. Furthermore the Blend4Web manual and api documentation were
+essential parts of the development process and also contain wealth of
+information on usage in Blender and implementation on the
 browser.
 
 ![](media/image2.png)
 
 Eluded follows a circular pattern at the end of which all animated
 variables and parameters are reset to their initial state. As a
-consequent this behavior results in a looping experience. The scene
+consequence this behavior results in a looping experience. The scene
 contains three polygonal objects including the tunnel, shrub, and
 sphere.
 
@@ -104,14 +104,15 @@ sphere.
 
 Audio is baked to **audio\_baked** object using [Audio to
 Markers](https://github.com/JacquesLucke/AudioToMarkers) addon in
-Blender. For this, the addon analyzes sound and bakes the amplitude of 8
+Blender. The addon analyzes sound and bakes the amplitude of 8
 different frequency ranges to separate F-Curves (animation channel),
 resulting in a single value based on the sound in each channel for every
-single frame.
+single frame. Audio to Markers streamlines this process, however it is not
+necessary since Blender natively supports baking of sounds to F-Curves.
 
 ![](media/image3.png)
 
-This data is retrieved during runtime for each frame and used to
+Baked audio data is retrieved during runtime for each frame and used to
 manipulate the strength of shape/blend keys of the **mesh\_sphere**
 object, resulting in the “sound-reactivity” that is observed. There is a
 single instance of mesh\_sphere object in the scene. This was an
@@ -121,8 +122,7 @@ cloned and to be more specific shallow copied to the location of each
 sphere\_xxx empty. With this approach, any change in the behavior or
 appearance of the original mesh\_sphere object is mirrored through all
 clones, reducing calculations and easing the process of animating. Same
-approach applies to **mesh\_shrub** object and vegetation visible in the
-scene.
+approach applies to **mesh\_shrub** object and the vegetation in the scene.
 
 All observed animations happen at runtime and are calculated based on
 F-Curve values of **audio\_baked** object. Other than the camera object,
@@ -130,11 +130,10 @@ nothing else is animated inside the Blender scene, however in more
 technical terms one can consider audio\_baked object to contain
 animation data.
 
-The camera was originally constrained to a curve and animated on a
-single axis. Later all translations were baked per frame using Bake
+The camera was originally constrained to lie along a curve and animated on a
+single axis. Later, all translations were baked per frame using Bake
 Action feature of Blender due to the fact that at the time of
-development Blend4Web did not support such constraints. F-Curves of the
-camera are shown below:
+development Blend4Web did not support curves. Camera animation graph is shown below:
 
 ![](media/image4.png)
 

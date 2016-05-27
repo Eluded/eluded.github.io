@@ -54,23 +54,17 @@ Libraries
 ---------
 
 -   Blend4Web 16.03
-
     -   <https://www.blend4web.com>
-
     -   <https://www.blend4web.com/doc/en/>
-
     -   <https://www.blend4web.com/api_doc/index.html>
 
 -   jQuery 2.2.3
-
     -   <https://jquery.org>
 
 -   screenfull.js 3.0.0
-
     -   <https://github.com/sindresorhus/screenfull.js>
 
 -   url() 1.8.6
-
     -   <https://github.com/websanova/js-url>
 
 Scene Setup
@@ -96,18 +90,19 @@ consequent this behavior results in a looping experience. The scene
 contains three polygonal objects including the tunnel, shrub, and
 sphere.
 
-  **camera**                         Active camera responsible for the view.
-  ---------------------------------- -------------------------------------------------------------------------------------------
-  **audio\_baked**                   Empty objects including 8 property channels for different frequency ranges of the music.
-  **mesh\_tunnel**                   A beveled curve, converted to mesh forming the pathway camera traverses.
-  **mesh\_shrub**                    A decimated mesh of grass.
-  **mesh\_sphere**                   Sphere object with multiple audio reactive shape/blend keys.
-  **parent\_sphere**                 Parent object of 100 empties representing sphere locations, scales, and initial rotation.
-  **sphere\_001, … , sphere\_100**   Empty objects, each representing the location of a sphere.
-  **parent\_plants**                 Parent object of 50 empties representing shrub locations, scales, and initial rotation.
-  **plant\_01, … , plant \_50**      Empty objects, each representing the location of a plant.
-  **sun**                            Sun lamp for scene lighting.
-  **speaker**                        Speaker object responsible for playback of music.
+| Object           | Use                                                                                       |
+|------------------|-------------------------------------------------------------------------------------------|
+| **camera**           | Active camera responsible for the view.                                                   |
+| **audio_baked**      | Empty objects including 8 property channels for different frequency ranges of the music.  |
+| **mesh_tunnel**      | A beveled curve, converted to mesh forming the pathway camera traverses.                  |
+| **mesh_shrub**       | A decimated mesh of grass.                                                                |
+| **mesh_sphere**      | Sphere object with multiple audio reactive shape/blend keys.                              |
+| **parent_sphere**    | Parent object of 100 empties representing sphere locations, scales, and initial rotation. |
+| **sphere_001 et al** | Empty objects, each representing the location of a sphere.                                |
+| **parent_plants**    | Parent object of 50 empties representing shrub locations, scales, and initial rotation.   |
+| **plant_01 et al**   | Empty objects, each representing the location of a plant.                                 |
+| **sun**              | Sun lamp for scene lighting.                                                              |
+| **speaker**          | Speaker object responsible for playback of music.                                         |
 
 Audio is baked to **audio\_baked** object using [Audio to
 Markers](https://github.com/JacquesLucke/AudioToMarkers) addon in
@@ -158,14 +153,12 @@ builds](http://blog.tojicode.com/2014/07/bringing-vr-to-chrome.html) and
 in the [Firefox nightly builds](https://nightly.mozilla.org/).
 
 -   Chrome Settings:
-
     -   In order to enable access to the WebVR APIs in these builds you
         must first navigate to **about:flags**. Scroll down through this
         list to find the row labeled “Enable WebVR” and click the
         “Enable” link.
 
 -   Firefox Settings:
-
     -   Install the [WebVR Enabler
         Add-on](http://www.mozvr.com/downloads/webvr-addon-0.1.0.xpi) —
         this enables WebVR and disables multiprocess browsing (E10S), a

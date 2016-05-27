@@ -10,17 +10,13 @@ purposes, [jQuery](https://jquery.com/) for UI needs,
 and [Blender](https://www.blender.org/) for asset creation. Feel free to
 modify, share, and explore.
 
-[create an anchor](#anchors-in-markdown)
 
-Content
+Contents
 -------
 
 -   [Intro](#intro)
-
 -   [Libraries](#libraries)
-
 -   [Scene Setup](#scene-setup)
-
 -   [WebVR Installation](#webvr-installtion)
 
 Intro

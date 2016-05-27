@@ -146,11 +146,11 @@ utility](https://developer.oculus.com/downloads/). Windows and MacOS
 versions can be found on the Oculus website in binary format, while
 Linux version should be compiled from the source code.
 
-For now, the HMD is supported by the [Chromium experimental
+For now, HMD is supported by the [Chromium experimental
 builds](http://blog.tojicode.com/2014/07/bringing-vr-to-chrome.html) and
 in the [Firefox nightly builds](https://nightly.mozilla.org/).
 
--   Chrome Settings:
+-   Chromium Settings:
     -   In order to enable access to the WebVR APIs in these builds you
         must first navigate to **about:flags**. Scroll down through this
         list to find the row labeled “Enable WebVR” and click the

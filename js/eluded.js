@@ -247,19 +247,19 @@ function load_regular(is_vr){
       }
 
       // Initialize root objects
-      properties = m_scene.get_object_by_name("properties");
-      tunnel = m_scene.get_object_by_name("Curve_Tunnel");
-      shrub = m_scene.get_object_by_name("Shrub");
+      properties = m_scene.get_object_by_name("audio_baked");
+      tunnel = m_scene.get_object_by_name("mesh_tunnel");
+      shrub = m_scene.get_object_by_name("mesh_shrub");
 
-      sphere = m_scene.get_object_by_name("Sphere");
+      sphere = m_scene.get_object_by_name("mesh_sphere");
       sphere.random1 = Math.random();
       sphere.random2 = Math.random();
       sphere.random3 = Math.random();
 
-      spheres_parent = m_scene.get_object_by_name("listParent");
+      spheres_parent = m_scene.get_object_by_name("parent_sphere");
       sphere_empties = m_scene.get_object_children(spheres_parent);
 
-      shrub_parent = m_scene.get_object_by_name("plantsParent");
+      shrub_parent = m_scene.get_object_by_name("parent_plants");
       shrub_empties = m_scene.get_object_children(shrub_parent);
 
       setup_scene();

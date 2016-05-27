@@ -82,7 +82,7 @@ browser.
 
 ![](media/image2.png)
 
-Eluded follows a circular pattern at the end of which on animated
+Eluded follows a circular pattern at the end of which all animated
 variables and parameters are reset to their initial state. As a
 consequent this behavior results in a looping experience. The scene
 contains three polygonal objects including the tunnel, shrub, and
@@ -115,7 +115,7 @@ This data is retrieved during runtime for each frame and used to
 manipulate the strength of shape/blend keys of the **mesh\_sphere**
 object, resulting in the “sound-reactivity” that is observed. There is a
 single instance of mesh\_sphere object in the scene. This was an
-intentional design to increase efficiency and load time. At runtime
+intentional design to increase efficiency and reduce load time. At runtime
 there exists a list of all **sphere\_xxx** empties. The sphere object is
 cloned and to be more specific shallow copied to the location of each
 sphere\_xxx empty. With this approach, any change in the behavior or

@@ -17,7 +17,7 @@ Contents
 -   [Intro](#intro)
 -   [Libraries](#libraries)
 -   [Scene Setup](#scene-setup)
--   [WebVR Installation](#webvr-installtion)
+-   [WebVR Installation](#webvr-installation)
 
 Intro
 -----

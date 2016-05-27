@@ -15,13 +15,13 @@ modify, share, and explore.
 Content
 -------
 
--   Intro
+-   [Intro](#intro)
 
--   Libraries
+-   [Libraries](#libraries)
 
--   Scene Setup
+-   [Scene Setup](#scene-setup)
 
--   WebVR Installation
+-   [WebVR Installation](#webvr-installtion)
 
 Intro
 -----

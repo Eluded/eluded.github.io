@@ -1,8 +1,6 @@
 Eluded
 ======
 
-![](media/image1.png)
-
 Eluded is an open source experience released under [GNU/GPL
 License](http://www.gnu.org/licenses/gpl-3.0.html). It
 utilizes [Blend4Web](http://www.gnu.org/licenses/gpl-3.0.html) for WebGL
